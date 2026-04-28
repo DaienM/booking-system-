@@ -1,19 +1,30 @@
-
+--Users Table
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE properties (
+-- Hotels/properties table 
+CREATE TABLE hotels (
   id SERIAL PRIMARY KEY,
-  owner_id INT REFERENCES users(id),
-  title VARCHAR(255) NOT NULL,
-  location VARCHAR(255),
-  price_per_night DECIMAL(10,2) NOT NULL,
+  name VARCHAR(100),
+  city VARCHAR(100),
+  rating DECIMAL(3,2),
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+--Rooms Table
+CREATE TABLE rooms(
+  id SERIAL PRIMARY KEY,
+  hotel_id INT REFERENCES hotels(id),
+  room_number VARCHAR((10),
+  price_per_night DECIMAL (10,2),
+  capacity INT
+);
+
+-- Bookings table 
 CREATE TABLE bookings(
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id),
