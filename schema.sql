@@ -34,3 +34,12 @@ CREATE TABLE bookings(
   status VARCHAR(20) DEFAULT 'confirmed',
   created_at TIMESTAMP DEFAULT NOW()
 );
+
+--Enoforcement of no double booking
+ALTER TABLE bookings
+ADD CONSTRAINT no_overlapping_bookings
+EXCLUDE USING gist(
+  room_id WITH =,
+  daterange(check_in, check_out, '[]') WITH && 
+)
+WHERE (status = 'confirmed');
